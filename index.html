@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mariano Remírez — Geochemist & Data Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f4f0;
+      --bg-white:  #ffffff;
+      --text:      #1c1c1a;
+      --text-mid:  #555550;
+      --text-muted:#888880;
+      --accent:    #2d7a5f;
+      --accent-lt: #e4f2ec;
+      --border:    #dddbd4;
+      --dark-bg:   #192820;
+      --dark-text: #d4e8df;
+      --serif:     'Playfair Display', Georgia, serif;
+      --sans:      'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: rgba(245, 244, 240, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cv {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 0.5px solid var(--accent);
+      padding: 0.45rem 1.1rem;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cv:hover { background: var(--accent); color: #fff; }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 620px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/hero.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.72) saturate(0.88);
+      transform: scale(1.03);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(25,40,32,0.82) 0%, rgba(25,40,32,0.1) 60%, transparent 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 4rem 5rem;
+      max-width: 900px;
+    }
+    .hero-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(212, 232, 223, 0.8);
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(44px, 6vw, 72px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 1.4rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: rgba(255,255,255,0.75);
+    }
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 2.2rem;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .hero-cta:hover { background: #245f49; }
+    .hero-cta svg { width: 14px; height: 14px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 0.5px;
+      width: 48px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--bg-white);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 5rem;
+      align-items: start;
+      max-width: 1100px;
+    }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 3px;
+      filter: saturate(0.88) brightness(1.02);
+    }
+    .about-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--border);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .about-text h2 {
+      font-family: var(--serif);
+      font-size: 38px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .about-text p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+      max-width: 560px;
+    }
+    .about-text p:last-of-type { margin-bottom: 2rem; }
+    .about-open {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.03em;
+    }
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-lt);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+    }
+    .skill-card {
+      background: var(--bg-white);
+      border: 0.5px solid var(--border);
+      border-radius: 3px;
+      padding: 2rem 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .skill-num {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--accent);
+      opacity: 0.35;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .skill-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .skill-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+    .skill-tools {
+      margin-top: 0.8rem;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    /* ── PROJECTS ── */
+    #projects {
+      background: var(--bg-white);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+    }
+    .project-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: saturate(0.85) brightness(0.96);
+    }
+    .project-img-placeholder {
+      width: 100%;
+      height: 220px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .project-body { padding: 1.6rem; }
+    .project-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .project-title {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 0.7rem;
+    }
+    .project-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    /* ── DIVIDER LANDSCAPE ── */
+    .landscape-divider {
+      height: 380px;
+      background-image: url('images/landscape.jpg');
+      background-size: cover;
+      background-position: center 55%;
+      background-attachment: fixed;
+      position: relative;
+      filter: saturate(0.82) brightness(0.78);
+    }
+    .landscape-divider-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(25,40,32,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .landscape-quote {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3vw, 34px);
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255,255,255,0.88);
+      text-align: center;
+      max-width: 680px;
+      padding: 0 2rem;
+      line-height: 1.5;
+    }
+
+    /* ── PUBLICATIONS ── */
+    #publications { background: var(--bg); }
+    .pubs-list {
+      max-width: 860px;
+      counter-reset: pub-counter;
+    }
+    .pub-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 1rem;
+      padding: 1.4rem 0;
+      border-bottom: 0.5px solid var(--border);
+      counter-increment: pub-counter;
+    }
+    .pub-item:last-child { border-bottom: none; }
+    .pub-num {
+      font-family: var(--serif);
+      font-size: 13px;
+      color: var(--text-muted);
+      padding-top: 2px;
+    }
+    .pub-content {}
+    .pub-title {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 0.25rem;
+    }
+    .pub-title a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pub-title a:hover { color: var(--accent); border-color: var(--accent); }
+    .pub-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .pub-meta strong {
+      font-weight: 500;
+      color: var(--text-mid);
+      font-style: italic;
+    }
+    .pub-scholar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2.5rem;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--accent);
+      padding-bottom: 2px;
+    }
+
+    /* ── SERVICE & COMMS ── */
+    #service {
+      background: var(--bg-white);
+      border-top: 0.5px solid var(--border);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1100px;
+    }
+    .service-col h3 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 1.8rem;
+    }
+    .service-item {
+      padding: 1rem 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .service-item:last-child { border-bottom: none; }
+    .service-role {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .service-org {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+    .service-year {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--accent);
+      margin-top: 0.2rem;
+      letter-spacing: 0.04em;
+    }
+    .comms-link {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.9rem 0;
+      border-bottom: 0.5px solid var(--border);
+      transition: color 0.2s;
+    }
+    .comms-link:last-child { border-bottom: none; }
+    .comms-link:hover { color: var(--accent); }
+    .comms-source {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 0.15rem;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--dark-bg);
+      padding: 7rem 4rem;
+    }
+    .contact-inner { max-width: 700px; }
+    .contact-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(212, 232, 223, 0.5);
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+    .contact-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .contact-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(212, 232, 223, 0.65);
+      line-height: 1.75;
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+    .contact-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .contact-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: #5bbf96;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-bottom: 0.5px solid rgba(91,191,150,0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+    .contact-link:hover { border-color: #5bbf96; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark-bg);
+      border-top: 0.5px solid rgba(255,255,255,0.07);
+      padding: 1.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-size: 11px;
+      color: rgba(212,232,223,0.3);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      #contact { padding: 5rem 1.5rem; }
+      footer { padding: 1.5rem; }
+      .hero-content { padding: 0 1.5rem 4rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo { max-width: 280px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .service-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .landscape-divider { background-attachment: scroll; }
+    }
+    @media (max-width: 540px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#hero" class="nav-name">Mariano Remírez</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#service">Leadership</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="cv.pdf" class="nav-cv" target="_blank">↓ CV</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-label">Geochemist · Data Scientist · Copenhagen</div>
+      <h1 class="hero-title">Earth data,<br><em>applied.</em></h1>
+      <p class="hero-sub">Reconstructing ancient ocean chemistry and climate to understand how Earth's systems respond to change — and bringing those skills to new problems.</p>
+      <a href="cv.pdf" class="hero-cta" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid fade-up">
+      <div>
+        <img src="images/portrait.jpg" alt="Mariano Remírez in the field, Bolivia" class="about-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="about-photo-placeholder" style="display:none;">portrait.jpg</div>
+      </div>
+      <div class="about-text">
+        <div class="section-label">About</div>
+        <h2>Scientist.<br>Analyst.<br>Communicator.</h2>
+        <p>I'm a postdoctoral researcher at the University of Copenhagen, working at the intersection of geochemistry, sedimentology, and Earth history. My research reconstructs ancient ocean chemistry and paleoclimate using geochemical proxies — translating rocks and sediments into quantitative records of how Earth's carbon, oxygen, and nutrient cycles have responded to major perturbations.</p>
+        <p>Beyond the lab, I bring hands-on experience in data analysis (Python, MATLAB), international fieldwork, grant management as NSF PI, and science communication for broad audiences. I hold a Fulbright fellowship and serve on the Board of Directors of the Geochemical Society.</p>
+        <p>These days, I'm as curious about where science meets society as I am about ancient oceans. I'm based in København and putting down roots here — learning Danish, exploring the city, and looking for ways to apply my background in environmental science, data-driven consulting, or science communication in the private sector.</p>
+        <span class="about-open">→ Open to new opportunities in Copenhagen</span>
+        <div class="about-tags">
+          <span class="tag">Environmental Science</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Consulting</span>
+          <span class="tag">Science Communication</span>
+          <span class="tag">Science Policy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label fade-up">Skills & Expertise</div>
+    <div class="skills-grid">
+      <div class="skill-card fade-up">
+        <div class="skill-num">01</div>
+        <div class="skill-title">Geochemical Analysis</div>
+        <div class="skill-desc">Hands-on characterization of sedimentary and carbonate systems using a range of analytical instruments.</div>
+        <div class="skill-tools">pXRF · XRD · SEM · ICP-MS</div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-num">02</div>
+        <div class="skill-title">Data Analysis & Modeling</div>
+        <div class="skill-desc">Quantitative workflows from raw geochemical datasets to statistical models and publication-ready figures.</div>
+        <div class="skill-tools">Python · MATLAB</div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-num">03</div>
+        <div class="skill-title">Environmental Reconstruction</div>
+        <div class="skill-desc">Proxy development and interpretation for ancient ocean chemistry, redox conditions, nutrient cycling, and paleoclimate.</div>
+        <div class="skill-tools">Carbonate systems · Trace elements · Isotopes</div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-num">04</div>
+        <div class="skill-title">Science Communication</div>
+        <div class="skill-desc">Published articles and radio interviews translating complex Earth science for non-specialist audiences in Spanish and English.</div>
+        <div class="skill-tools">El Gato y La Caja · Ciencia Hoy · ADN Ciencia</div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-num">05</div>
+        <div class="skill-title">Grant & Project Management</div>
+        <div class="skill-desc">PI on NSF-funded research. Coordinating multi-institution international field campaigns across four countries.</div>
+        <div class="skill-tools">NSF · Fulbright · KU · George Mason · SUNY</div>
+      </div>
+      <div class="skill-card fade-up">
+        <div class="skill-num">06</div>
+        <div class="skill-title">Languages</div>
+        <div class="skill-desc">Native Spanish, fluent English, and intermediate Danish — actively studying and building roots in Copenhagen.</div>
+        <div class="skill-tools">Español · English · Dansk (modul 4)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label fade-up">Selected Research</div>
+    <div class="projects-grid">
+
+      <div class="project-card fade-up">
+        <img src="images/field.jpg" alt="Fieldwork in Bolivia" class="project-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="project-img-placeholder" style="display:none;">your photo here</div>
+        <div class="project-body">
+          <div class="project-tag">Paleozoic · Mesozoic · Earth System Science</div>
+          <div class="project-title">Biotic Crises Across Deep Time</div>
+          <p class="project-desc">From the Late Devonian mass extinctions to Mesozoic Oceanic Anoxic Events, this research investigates how large-scale disruptions to Earth's carbon cycle — driven by volcanism, land plant evolution, and ocean circulation changes — cascade into environmental collapse and biodiversity loss. These ancient crises serve as natural experiments for understanding how Earth systems respond to rapid perturbation, with direct relevance to present-day climate change.</p>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-img-placeholder">your photo here</div>
+        <div class="project-body">
+          <div class="project-tag">Proxy Development · Analytical Geochemistry</div>
+          <div class="project-title">Uranium Isotopes & Ocean Oxygenation</div>
+          <p class="project-desc">Uranium isotopes are one of the most powerful tools for reconstructing oxygen levels in ancient oceans. I have developed and refined the application of uranium isotope systematics in carbonates and fine-grained sediments, building calibrations that allow us to quantify the extent of seafloor anoxia during past global crises. This work directly informs our understanding of how oxygen-depleted oceans develop and recover — a question with urgent relevance for modern ocean deoxygenation driven by warming and eutrophication.</p>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-img-placeholder">your photo here</div>
+        <div class="project-body">
+          <div class="project-tag">Proxy Development · Paleoceanography</div>
+          <div class="project-title">Salinity Proxies in Ancient Seas</div>
+          <p class="project-desc">Reconstructing past salinity is essential for understanding ancient ocean circulation, watermass properties, and the hydrological cycle. I develop and calibrate elemental proxies — including B/Ga and related ratios — in modern and near-modern sedimentary environments, then apply them to deep-time records. This work bridges modern oceanographic observations with the geological past, providing quantitative constraints on how Earth's water cycle has evolved across major climate transitions.</p>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div class="project-img-placeholder">your photo here</div>
+        <div class="project-body">
+          <div class="project-tag">Paleoceanography · Climate Change · NSF-funded</div>
+          <div class="project-title">North Pacific Ventilation & Future Ocean Circulation</div>
+          <p class="project-desc">The global ocean is absorbing most of the heat and CO2 from human-induced warming, but how this will affect long-term circulation remains uncertain. This project uses the warm Pliocene as a natural analogue for future climate, testing whether a Pacific Meridional Overturning Circulation existed during that interval. Working alongside climate modelers, geochemists, and astrochronologists, I reconstruct ocean ventilation, nutrient availability, and water mass mixing using redox and productivity proxies. If a Pliocene PMOC is confirmed, it would require substantial revision of our models for future ocean-climate feedbacks.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LANDSCAPE DIVIDER -->
+  <div class="landscape-divider">
+    <div class="landscape-divider-overlay">
+      <p class="landscape-quote">"The rocks remember everything the ocean forgot."</p>
+    </div>
+  </div>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-label fade-up">Publications</div>
+    <div class="pubs-list fade-up">
+
+      <div class="pub-item">
+        <span class="pub-num">1</span>
+        <div class="pub-content">
+          <p class="pub-title"><a href="#" target="_blank">Transient glacio-eustatic fall and its climato-environmental effects during the Frasnian–Famennian transition</a></p>
+          <p class="pub-meta">Algeo T.J., <strong>Remírez M.</strong>, Zhao H., et al. — <strong>Global and Planetary Change</strong>, 256, 2026</p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-num">2</span>
+        <div class="pub-content">
+          <p class="pub-title"><a href="#" target="_blank">Influence of clay-mineral assemblages on the B/Ga salinity proxy</a></p>
+          <p class="pub-meta">Algeo T.J., Wei W., <strong>Remírez M.</strong>, et al. — <strong>Chemical Geology</strong>, 688, 2025</p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-num">3</span>
+        <div class="pub-content">
+          <p class="pub-title"><a href="#" target="_blank">Calibrating elemental salinity proxies in Holocene sedimentary environments</a></p>
+          <p class="pub-meta"><strong>Remírez M.</strong>, Gilleaudeau G., McBride R., et al. — <strong>Chemical Geology</strong>, 678, 2025</p>
+        </div>
+      </div>
+
+      <div class="pub-item">
+        <span class="pub-num">4</span>
+        <div class="pub-content">
+          <p class="pub-title"><a href="#" target="_blank">Seas to lakes and vice-versa: A test of facies versus elemental salinity proxies</a></p>
+          <p class="pub-meta"><strong>Remírez M.</strong>, Schwarz E., Gilleaudeau G., Veiga G., Algeo T. — <strong>Chemical Geology</strong>, 678, 2025</p>
+        </div>
+      </div>
+
+    </div>
+    <a href="https://scholar.google.com" target="_blank" class="pub-scholar fade-up">View all on Google Scholar →</a>
+  </section>
+
+  <!-- SERVICE & COMMS -->
+  <section id="service">
+    <div class="service-grid fade-up">
+      <div class="service-col">
+        <div class="section-label">Leadership & Service</div>
+        <h3>Roles & Positions</h3>
+
+        <div class="service-item">
+          <div class="service-role">Board of Directors</div>
+          <div class="service-org">Geochemical Society</div>
+          <div class="service-year">2025 — Present</div>
+        </div>
+        <div class="service-item">
+          <div class="service-role">Early Career Scientist Committee Member</div>
+          <div class="service-org">International Association of Sedimentologists</div>
+          <div class="service-year">2024 — Present</div>
+        </div>
+        <div class="service-item">
+          <div class="service-role">DEI Committee Chair</div>
+          <div class="service-org">Geochemical Society</div>
+          <div class="service-year">2023 — Present</div>
+        </div>
+        <div class="service-item">
+          <div class="service-role">Volunteer</div>
+          <div class="service-org">SedsOnline</div>
+          <div class="service-year">2021 — 2025</div>
+        </div>
+        <div class="service-item">
+          <div class="service-role">Graduate Councilor</div>
+          <div class="service-org">Centro de Investigaciones Geológicas</div>
+          <div class="service-year">2018 — 2019</div>
+        </div>
+      </div>
+
+      <div class="service-col">
+        <div class="section-label">Science Communication</div>
+        <h3>Articles & Interviews</h3>
+
+        <a href="#" class="comms-link" target="_blank">
+          Receta para hacer petróleo
+          <div class="comms-source">El Gato y La Caja</div>
+        </a>
+        <a href="#" class="comms-link" target="_blank">
+          Sexta a fondo
+          <div class="comms-source">El Gato y La Caja</div>
+        </a>
+        <a href="#" class="comms-link" target="_blank">
+          Cómo estudiamos y qué sabemos de las playas del pasado
+          <div class="comms-source">Ciencia Hoy · with Manu Isla</div>
+        </a>
+        <a href="#" class="comms-link" target="_blank">
+          Radio interview
+          <div class="comms-source">ADN Ciencia · Radio Universidad de La Plata</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner fade-up">
+      <div class="contact-label">Get in touch</div>
+      <h2 class="contact-title">Let's talk.</h2>
+      <p class="contact-sub">Open to opportunities in environmental consulting, data science, science communication, and science policy in Copenhagen. Always happy to connect.</p>
+      <div class="contact-links">
+        <a href="mailto:mnr@ign.ku.dk" class="contact-link">mnr@ign.ku.dk</a>
+        <a href="https://linkedin.com" target="_blank" class="contact-link">LinkedIn</a>
+        <a href="https://scholar.google.com" target="_blank" class="contact-link">Google Scholar</a>
+        <a href="cv.pdf" target="_blank" class="contact-link">Download CV</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Mariano Remírez</p>
+    <p>København, Denmark</p>
+  </footer>
+
+  <script>
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Hero bg subtle zoom on load
+    const heroBg = document.getElementById('heroBg');
+    setTimeout(() => heroBg.classList.add('loaded'), 100);
+
+    // Fade-up on scroll
+    const faders = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    faders.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
