@@ -269,7 +269,61 @@
       padding: 0.3rem 0.8rem;
       border-radius: 2px;
     }
-
+    /* ── EDUCATION ── */
+    #education {
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+    }
+    
+    .education-list {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    
+    .education-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 1.5rem;
+      padding: 1.4rem 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    
+    .education-item:last-child {
+      border-bottom: none;
+    }
+    
+    .education-year {
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--accent);
+    }
+    
+    .education-degree {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    
+    .education-institution {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-mid);
+    }
+    
+    .education-note {
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 0.3rem;
+    }
+    
+    @media (max-width: 540px) {
+      .education-item {
+        grid-template-columns: 50px 1fr;
+        gap: 1rem;
+      }
+    }
     /* ── SKILLS ── */
     #skills { background: var(--bg); }
     .skills-grid {
@@ -644,6 +698,7 @@
     <a href="#hero" class="nav-name">Mariano Remírez</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#service">Leadership</a></li>
       <li><a href="#projects">Research</a></li>
@@ -686,12 +741,85 @@
           <span class="tag">RESEARCH FUNDING</span>
           <span class="tag">DATA & ANALYSIS</span>
           <span class="tag">PROJECT LEADERSHIP</span>
-          <span class="tag">SCIENCE COMMUNICATION</span>
-          <span class="tag">SCIENTIFIC EDUCATION</span>
+          <span class="tag">SCIENCE EDUCATION & COMMUNICATION</span>
         </div>
       </div>
     </div>
   </section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label fade-up">Education</div>
+  <div class="education-list fade-up">
+
+    <div class="education-item">
+      <div class="education-year">2023</div>
+      <div>
+        <div class="education-degree">
+          Postgraduate Specialisation in Science Education
+        </div>
+        <div class="education-institution">
+          National University of La Plata, Argentina
+        </div>
+        <div class="education-note">
+          Recognised in Denmark as equivalent to a Master's degree
+        </div>
+      </div>
+    </div>
+
+    <div class="education-item">
+      <div class="education-year">2020</div>
+      <div>
+        <div class="education-degree">
+          PhD in Natural Sciences
+        </div>
+        <div class="education-institution">
+          National University of La Plata, Argentina
+        </div>
+      </div>
+    </div>
+
+    <div class="education-item">
+      <div class="education-year">2019</div>
+      <div>
+        <div class="education-degree">
+          Graduate Diploma in University Teaching
+        </div>
+        <div class="education-institution">
+          Universidad del Este, Argentina
+        </div>
+      </div>
+    </div>
+
+    <div class="education-item">
+      <div class="education-year">2018</div>
+      <div>
+        <div class="education-degree">
+          Fulbright Visiting Scholar
+        </div>
+        <div class="education-institution">
+          University of Cincinnati, USA
+        </div>
+      </div>
+    </div>
+
+    <div class="education-item">
+      <div class="education-year">2014</div>
+      <div>
+        <div class="education-degree">
+          Degree in Geology
+        </div>
+        <div class="education-institution">
+          National University of La Plata, Argentina
+        </div>
+        <div class="education-note">
+          Summa cum laude · Recognised in Denmark as equivalent to Bachelor's and Master's degrees
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 <!-- SKILLS -->
 <section id="skills">
